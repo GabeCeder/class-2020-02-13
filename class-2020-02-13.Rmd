@@ -1,0 +1,40 @@
+---
+title: "class-2020-02-13"
+author: "Gabe Cederberg"
+date: "2/13/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(janitor)
+library(gt)
+library(tidyverse)
+library(readxl)
+```
+
+
+```{r, echo=FALSE}
+x <- read_excel(path = "~/Desktop/Projects/class-2020-02-13/class_enrollment_summary_by_term_2.13.20.xlsx", 
+           skip = 3)
+
+y <- x %>% 
+  clean_names()
+
+z <- y %>% 
+  filter(course_department == "Government") %>% 
+  select(course_title, course_name, course_department, instructor_full_name, total) %>% 
+  arrange(desc(total)) %>% 
+  head(5)
+
+a <-z %>% 
+  gt() %>% 
+  tab_header(
+    "Five Most Popular Government Courses", 
+    subtitle = "Hello") 
+
+
+a
+```
+
+
